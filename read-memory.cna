@@ -1,0 +1,35 @@
+# $1 = beacon ID (always true)
+# $2 = command (next params are separated by spaces)
+# $3 = etc.
+
+alias read-memory {
+        # I think this just inits the vars?
+        local('$handle $data $args $command');
+
+        # @_ holds args
+        if (size(@_) != 5) {
+                berror($1, "Usage: read-memory amsi AmsiScanBuffer 0 8");
+                return;
+        }
+
+        # Parse our args
+        $dllName = $2;
+        $functionName = $3;
+        $startIndex = $4;
+        $numOfBytes = $5;
+
+        # Open the object file, and read it in.
+        $handle = openf(script_resource("read-memory.o"));
+        $data   = readb($handle, -1);
+        closef($handle)
+
+        # pack our arguments
+        $args = bof_pack($1, "zzii", $dllName, $functionName, $startIndex, $numOfBytes);
+        
+
+        # announce to user
+        btask($1, "reading memory at  $2 : $3 starting index $4 and reading $5 bytes");
+
+        # Run a BOF
+        beacon_inline_execute($1, $data, "go", $args);
+}
