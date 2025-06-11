@@ -1,0 +1,39 @@
+{
+  "name": "autopatch",
+  "version": "1.0.0",
+  "command_name": "autopatch",
+  "extension_author": "galoryber",
+  "original_author": "galoryber",
+  "repo_url": "https://github.com/galoryber/AutoPatch",
+  "help": "Automatically find function calls and write a byte patch to jump to the nearest C3 operation",
+  "long_help": "To Autopatch a function, specify the dllName, functionName, and how many bytes to read nearby the function call to search for a C3 operation",
+  "depends_on": "coff-loader",
+  "entrypoint": "go",
+  "files": [
+    {
+      "os": "windows",
+      "arch": "amd64",
+      "path": "autopatch.o"
+    }
+  ],
+  "arguments": [
+    {
+      "name": "dllName",
+      "desc": "DLL Name",
+      "type": "string",
+      "optional": false
+    },
+    {
+      "name": "functionName",
+      "desc": "DLL Function Name",
+      "type": "string",
+      "optional": false
+    },
+    {
+      "name": "numOfBytesToRead",
+      "desc": "How many bytes do you want to read around the function call Ex: 300",
+      "type": "int",
+      "optional": false
+    }
+  ]
+}

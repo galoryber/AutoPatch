@@ -1,0 +1,45 @@
+{
+  "name": "write-memory",
+  "version": "1.0.0",
+  "command_name": "write-memory",
+  "extension_author": "galoryber",
+  "original_author": "galoryber",
+  "repo_url": "https://github.com/galoryber/AutoPatch",
+  "help": "write bytes dll function locations",
+  "long_help": "To write bytes, specify the dllName, functionName, startIndex, and bytes to write in this format EEFF9090AA",
+  "depends_on": "coff-loader",
+  "entrypoint": "go",
+  "files": [
+    {
+      "os": "windows",
+      "arch": "amd64",
+      "path": "write-memory.o"
+    }
+  ],
+  "arguments": [
+    {
+      "name": "dllName",
+      "desc": "DLL Name",
+      "type": "string",
+      "optional": false
+    },
+    {
+      "name": "functionName",
+      "desc": "DLL Function Name",
+      "type": "string",
+      "optional": false
+    },
+    {
+      "name": "startIndex",
+      "desc": "The starting index to write bytes at, like 0",
+      "type": "int",
+      "optional": false
+    },
+    {
+      "name": "bytesToWrite",
+      "desc": "The bytes you want to write into the function call, formatted like EEFF9090AA",
+      "type": "string",
+      "optional": false
+    }
+  ]
+}

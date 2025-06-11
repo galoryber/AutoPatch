@@ -1,0 +1,45 @@
+{
+  "name": "read-memory",
+  "version": "1.0.0",
+  "command_name": "read-memory",
+  "extension_author": "galoryber",
+  "original_author": "galoryber",
+  "repo_url": "https://github.com/galoryber/AutoPatch",
+  "help": "Read bytes dll function locations",
+  "long_help": "To read bytes, specify the dllName, functionName, startIndex, and numberOfBytesToRead",
+  "depends_on": "coff-loader",
+  "entrypoint": "go",
+  "files": [
+    {
+      "os": "windows",
+      "arch": "amd64",
+      "path": "read-memory.o"
+    }
+  ],
+  "arguments": [
+    {
+      "name": "dllName",
+      "desc": "DLL Name",
+      "type": "string",
+      "optional": false
+    },
+    {
+      "name": "functionName",
+      "desc": "DLL Function Name",
+      "type": "string",
+      "optional": false
+    },
+    {
+      "name": "startIndex",
+      "desc": "The starting index to read bytes from, like 0",
+      "type": "int",
+      "optional": false
+    },
+    {
+      "name": "numOfBytesToRead",
+      "desc": "How many bytes do you want to read from the function call",
+      "type": "int",
+      "optional": false
+    }
+  ]
+}

