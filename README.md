@@ -5,6 +5,8 @@ Using these BOFs, you should be able to implement your own patches, or a few aut
 
 This is useful for your own AMSI / ETW byte patches, or any other DLL you might want to patch functionality out of.
 
+These are based off of my blog post -> https://globetech.biz/index.php/2025/06/16/the-return-of-amsi-easy-dll-patching-without-c3/ 
+
 ## read-memory
 
 Usage:
@@ -25,6 +27,8 @@ For example, to write \0x90,\0x90,\0x90 to the AmsiScanBuffer function call:
 
 `write-memory amsi AmsiScanBuffer 0 909090`
 
+![Example of write-memory](https://globetech.biz/wp-content/uploads/2025/06/image-1024x406.png)
+
 ## autopatch
 
 Usage:
@@ -34,3 +38,5 @@ Usage:
 For example, to search through 300 bytes from the AmsiScanBuffer function call, looking for a C3 operation to JMP to:
 
 `autopatch amsi AmsiScanBuffer 300`
+
+![Example of Autopatch forward and backwards, near and short JMPs](https://globetech.biz/wp-content/uploads/2025/06/image-1-1024x950.png)
